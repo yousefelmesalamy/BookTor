@@ -6,16 +6,18 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import alzhimarTest
 from .serializers import alzhimarTestSerializer
 
+
 # Create your views here.
 class alzhimarTest_ViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = alzhimarTest.objects.all()
     serializer_class = alzhimarTestSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['user__id','user__username', 'id', 'date', "result"]
+    filterset_fields = ['user__id', 'user__username', 'id', 'date', "result"]
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid() :
+        if serializer.is_valid():
             result = serializer.predict()
             serializer.save(result=result)
             return Response({"response": result}, status=status.HTTP_201_CREATED)

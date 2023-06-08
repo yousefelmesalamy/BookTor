@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #apps
     'authentications',
+    'alzhimarTest',
+    'bloodtest',
+    'heartTest',
+
     # rest_framework
     'rest_framework',
     'rest_framework.authtoken',
