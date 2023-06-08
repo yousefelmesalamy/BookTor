@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import bloodTest
 from django.conf import settings
+import joblib
+
 
 class bloodTestSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(

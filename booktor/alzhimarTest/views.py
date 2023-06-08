@@ -2,21 +2,17 @@ from django.shortcuts import render
 from rest_framework import viewsets, status, filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import generics, mixins, viewsets
-from rest_framework import status, filters
 from django_filters.rest_framework import DjangoFilterBackend
-from serializers import bloodTestSerializer
-from models import bloodTest
-
-from ..authentications.permissons import *
+from .models import alzhimarTest
+from .serializers import alzhimarTestSerializer
 
 # Create your views here.
-class bloodTest_ViewSet(viewsets.ModelViewSet):
+class alzhimarTest_ViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = bloodTest.objects.all()
-    serializer_class = bloodTestSerializer
+    queryset = alzhimarTest.objects.all()
+    serializer_class = alzhimarTestSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['user__id', 'user__username', 'id', 'date', "result"]
+    filterset_fields = ['user__id','user__username', 'id', 'date', "result"]
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid() :

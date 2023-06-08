@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from datetime import date
 
+
 # Create your models here.
 class bloodTest(models.Model):
     id = models.AutoField(unique=True, primary_key=True, auto_created=True)
@@ -15,7 +16,8 @@ class bloodTest(models.Model):
     adiponcetin = models.FloatField()
     resistiin = models.FloatField()
     mcp = models.FloatField()
-    date = models.DateField(default=date.today , null=False)
-    result = models.CharField(max_length=20 , null=True)
+    date = models.DateField(default=date.today, null=False)
+    result = models.CharField(max_length=20, null=True)
+
     def __str__(self):
         return str(self.date)
