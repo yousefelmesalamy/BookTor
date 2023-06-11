@@ -14,13 +14,18 @@ class UserSerializer(serializers.ModelSerializer):
             'username': {'required': True}
         }
 
-    # def validate_password(self, value):
-    #     validate_password(value)
-    #     return value
+    user = serializers.SerializerMethodField()
+    user_id = serializers.SerializerMethodField()
+    email = serializers.SerializerMethodField()
+    def get_user(self, instance):
+        return instance.user.username
 
-    def create(self, validated_data):
-        user = USER.objects.create_user(**validated_data)
-        return user
+    def get_user_id(self, instance):
+        return instance.user.id
+
+    def get_email(self, instance):
+        return instance.user.email
+
 
     def update(self, instance, validated_data):
         password = validated_data.pop('password', None)
@@ -29,3 +34,4 @@ class UserSerializer(serializers.ModelSerializer):
             user.set_password(password)
             user.save()
         return user
+

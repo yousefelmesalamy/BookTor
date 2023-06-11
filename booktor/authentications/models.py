@@ -40,7 +40,6 @@ class USER(AbstractBaseUser, PermissionsMixin):
     profile_pic = models.ImageField(upload_to='profile_pics', default='profile_pics/default_profile.jpg')
 
     is_doctor = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 
@@ -50,8 +49,7 @@ class USER(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def __str__(self):
-        return self.email
-
+        return f"{self.user.first_name} {self.user.last_name}"
 
     class Meta:
         verbose_name = 'User'
