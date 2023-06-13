@@ -3,7 +3,7 @@ from .models import alzhimarTest
 from django.contrib.auth.models import User
 import pickle
 from django.contrib.auth.models import User
-
+from sklearn.ensemble import RandomForestClassifier
 
 class alzhimarTestSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(source='user.username',

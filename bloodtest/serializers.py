@@ -3,7 +3,7 @@ from .models import bloodTest
 from django.contrib.auth.models import User
 from django.conf import settings
 import joblib
-
+from sklearn.ensemble import RandomForestClassifier
 
 class bloodTestSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(source='user.username',
