@@ -1,19 +1,29 @@
 from rest_framework import serializers
 from .models import bloodTest
+from django.contrib.auth.models import User
 from django.conf import settings
 import joblib
 
 
 class bloodTestSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(
-        default=serializers.CurrentUserDefault(),
-        queryset=settings.AUTH_USER_MODEL.objects.all(), )
-    patient_name = serializers.SerializerMethodField()
-    class Meta :
+    user = serializers.HiddenField(source='user.username',
+                                   default=serializers.CurrentUserDefault())
+
+    class Meta:
         model = bloodTest
         fields = '__all__'
-    def get_patient_name(self,instance):
-        return f"{instance.user.first_name} {instance.user.last_name}"
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response['patient_name'] = f"{instance.user.first_name} {instance.user.last_name}"
+        return response
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        validated_data['user'] = user
+        obj = bloodTest.objects.create(**validated_data)
+        return obj
+
 
     def predict(self):
         data = self.validated_data

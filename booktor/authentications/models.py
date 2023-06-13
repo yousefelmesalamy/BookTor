@@ -10,8 +10,12 @@ from django.core.mail import send_mail
 from dateutil.relativedelta import relativedelta
 from datetime import date
 
-
 # Create your models here.
+USER_GOAL_CHOICES = (
+    ('DOC', 'DOCTOR'),
+    ('PAT', 'PATIENT')
+)
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -34,12 +38,14 @@ class USER(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, null=False, blank=False)
     first_name = models.CharField(max_length=30, null=False, blank=False)
     last_name = models.CharField(max_length=30, null=False, blank=False)
+    user_goal = models.CharField(choices=USER_GOAL_CHOICES, max_length=7)
     phone = models.CharField(max_length=15, unique=True, null=False, blank=False)
     age = models.IntegerField(null=True, blank=True)
     location = models.CharField(max_length=50, null=True, blank=True)
     profile_pic = models.ImageField(upload_to='profile_pics', default='profile_pics/default_profile.jpg')
 
     is_doctor = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 
@@ -49,7 +55,7 @@ class USER(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
+        return f"{self.first_name} {self.last_name}"
 
     class Meta:
         verbose_name = 'User'

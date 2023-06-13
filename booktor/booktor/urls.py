@@ -25,7 +25,8 @@ urlpatterns = [
     path('alzhimarTest/', include('alzhimarTest.urls')),
     path('bloodtest/', include('bloodtest.urls')),
     path('heartTest/', include('heartTest.urls')),
-
+    path('reservation/', include('reservation.urls')),
+    path('lab_appointment/', include('lab_appointment.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

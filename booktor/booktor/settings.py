@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'alzhimarTest',
     'bloodtest',
     'heartTest',
+    'reservation',
+    'lab_appointment',
 
     # rest_framework
     'rest_framework',

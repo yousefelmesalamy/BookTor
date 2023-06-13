@@ -6,7 +6,7 @@ from django.conf import settings
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = USER
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone',  'password', 'is_doctor')
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone',  'password','is_doctor')
         read_only_fields = ('id', 'date_joined',)
         extra_kwargs = {
             'password': {'write_only': True},
@@ -14,18 +14,13 @@ class UserSerializer(serializers.ModelSerializer):
             'username': {'required': True}
         }
 
-    user = serializers.SerializerMethodField()
-    user_id = serializers.SerializerMethodField()
-    email = serializers.SerializerMethodField()
-    def get_user(self, instance):
-        return instance.user.username
+    # def validate_password(self, value):
+    #     validate_password(value)
+    #     return value
 
-    def get_user_id(self, instance):
-        return instance.user.id
-
-    def get_email(self, instance):
-        return instance.user.email
-
+    def create(self, validated_data):
+        user = USER.objects.create_user(**validated_data)
+        return user
 
     def update(self, instance, validated_data):
         password = validated_data.pop('password', None)
@@ -34,4 +29,3 @@ class UserSerializer(serializers.ModelSerializer):
             user.set_password(password)
             user.save()
         return user
-
