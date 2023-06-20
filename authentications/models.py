@@ -38,10 +38,10 @@ class USER(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, null=False, blank=False)
     first_name = models.CharField(max_length=30, null=False, blank=False)
     last_name = models.CharField(max_length=30, null=False, blank=False)
-    user_goal = models.CharField(choices=USER_GOAL_CHOICES, max_length=7)
+    # user_goal = models.CharField(choices=USER_GOAL_CHOICES, max_length=7)
     phone = models.CharField(max_length=15, unique=True, null=False, blank=False)
-    age = models.IntegerField(null=True, blank=True)
-    location = models.CharField(max_length=50, null=True, blank=True)
+    # age = models.IntegerField(null=True, blank=True)
+    # location = models.CharField(max_length=50, null=True, blank=True)
     profile_pic = models.ImageField(upload_to='profile_pics', default='profile_pics/default_profile.jpg')
 
     is_doctor = models.BooleanField(default=False)
