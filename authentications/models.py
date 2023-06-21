@@ -36,10 +36,10 @@ class UserManager(BaseUserManager):
 class USER(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=30, unique=True, null=False, blank=False)
     email = models.EmailField(unique=True, null=False, blank=False)
-    first_name = models.CharField(max_length=30, null=False, blank=False)
-    last_name = models.CharField(max_length=30, null=False, blank=False)
+    # first_name = models.CharField(max_length=30, null=False, blank=False)
+    # last_name = models.CharField(max_length=30, null=False, blank=False)
     # user_goal = models.CharField(choices=USER_GOAL_CHOICES, max_length=7)
-    phone = models.CharField(max_length=15, unique=True, null=False, blank=False)
+    # phone = models.CharField(max_length=15, unique=True, null=False, blank=False)
     # age = models.IntegerField(null=True, blank=True)
     # location = models.CharField(max_length=50, null=True, blank=True)
     profile_pic = models.ImageField(upload_to='profile_pics', default='profile_pics/default_profile.jpg')
@@ -50,12 +50,12 @@ class USER(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'phone', ]
+    REQUIRED_FIELDS = ['username']
 
     objects = UserManager()
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return self.email
 
     class Meta:
         verbose_name = 'User'

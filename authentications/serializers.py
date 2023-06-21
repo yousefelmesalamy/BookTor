@@ -6,7 +6,7 @@ from django.conf import settings
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = USER
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'phone',  'password','is_doctor')
+        fields = ('id', 'username', 'email', 'password', 'is_doctor')
         read_only_fields = ('id', 'date_joined',)
         extra_kwargs = {
             'password': {'write_only': True},
