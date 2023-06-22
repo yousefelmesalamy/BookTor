@@ -42,7 +42,7 @@ class USER(AbstractBaseUser, PermissionsMixin):
     # phone = models.CharField(max_length=15, unique=True, null=False, blank=False)
     # age = models.IntegerField(null=True, blank=True)
     # location = models.CharField(max_length=50, null=True, blank=True)
-    profile_pic = models.ImageField(upload_to='profile_pics', default='profile_pics/default_profile.jpg')
+    profile_pic = models.ImageField(upload_to='profile_pics', default='profile_pics/default_profile.png')
 
     is_doctor = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
