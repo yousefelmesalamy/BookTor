@@ -62,6 +62,4 @@ class Dates(models.Model):
     availability = models.BooleanField(default=True)
 
     def change_availability(self):
-        self.availability=False
-
-
+        self.availability = False

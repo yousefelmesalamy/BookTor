@@ -13,7 +13,7 @@ from .serializers import *
 class Doctor_CategoryViewSet(viewsets.ModelViewSet):
     queryset = Doctor_Category.objects.all()
     serializer_class = Doctor_CategorySerializer
-    permission_classes = [IsDoctorOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['doctor__username', 'category']
     ordering_fields = ['doctor__username', 'category']
