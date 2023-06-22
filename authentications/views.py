@@ -39,9 +39,11 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [UserPermission]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     # pagination_class = StandardResultsSetPagination
-    filterset_fields = ['username', 'email', 'first_name', 'last_name', 'phone', 'is_active', 'is_staff', ]
+    filterset_fields = ['id', 'username', 'email', 'is_active', 'is_doctor', ]
 
-    search_fields = ['username', 'email', 'first_name', 'last_name', 'phone', 'is_active', 'is_staff', ]
+    search_fields = ['username', 'email', 'is_active', 'is_doctor', ]
+
+    lockup_field = 'id'
 
     # def create(self, request, *args, **kwargs):
     #     # data_1 = {key: value for key, value in request.data.items() if key in USERSSS.Meta.fields}
