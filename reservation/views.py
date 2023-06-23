@@ -37,7 +37,6 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = self.queryset
         user = self.request.user
-        print(queryset)
         if user.is_doctor:
             queryset = queryset.filter(doctor__username=user.username)
         else:
