@@ -34,6 +34,16 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
 
+    def get_queryset(self):
+        queryset = self.queryset
+        user = self.request.user
+        print(queryset)
+        if user.is_doctor:
+            queryset = queryset.filter(doctor__username=user.username)
+        else:
+            queryset = queryset.filter(patient__username=user.username)
+        return queryset
+
 
 class DateViewSet(viewsets.ModelViewSet):
     permission_classes = [IsDoctorOrReadOnly]
