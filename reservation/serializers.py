@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import *
-from authentications.serializers import *
 
 
 class Doctor_CategorySerializer(serializers.ModelSerializer):
@@ -34,13 +33,35 @@ class Doctor_CategorySerializer(serializers.ModelSerializer):
 
 class AppointmentSerializer(serializers.ModelSerializer):
     patient_data = serializers.SerializerMethodField()
+    doctor_data = serializers.SerializerMethodField()
     class Meta:
         model = Appointment
         fields = '__all__'
 
     def get_patient_data(self, obj):
-        data = UserSerializer(obj).data
+        request = self.context.get('request')
+        profile_pic = request.build_absolute_uri(obj.patient.profile_pic)
+        data = {
+            'id': obj.patient.id,
+            'username': obj.patient.username,
+            'email': obj.patient.email,
+            'profile_pic': profile_pic,
+        }
         return data
+
+    def get_doctor_data(self, obj):
+        request = self.context.get('request')
+        profile_pic = request.build_absolute_uri(obj.doctor.profile_pic)
+        doctor_category = Doctor_Category.objects.filter(doctor=obj.doctor)
+        data = {
+            'id': obj.doctor.id,
+            'username': obj.doctor.username,
+            'email': obj.doctor.email,
+            'profile_pic': profile_pic,
+            'speciality': Doctor_CategorySerializer(doctor_category, many=True).data
+        }
+        return data
+
 
     def validate(self, attrs):
         doctor = attrs['doctor']
