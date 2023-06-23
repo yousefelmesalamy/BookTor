@@ -3,19 +3,15 @@ from .models import *
 
 
 class Doctor_CategorySerializer(serializers.ModelSerializer):
-    doctor_username = serializers.SerializerMethodField()
-
+    # doctor_username = serializers.SerializerMethodField()
     class Meta:
         model = Doctor_Category
-        fields = ['doctor', 'doctor_username', 'category']
-
-    def get_doctor_username(self, obj):
-        return obj.doctor.username
-
-    def create(self, validated_data):
-        doctor_category = Doctor_Category.objects.create(**validated_data)
-        # doctor_category.save()
-        return doctor_category
+        # fields = ['doctor', 'category']
+        fields = '__all__'
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['doctor'] = instance.doctor.username
+        return data
 
     def validate(self, attrs):
         doctor = attrs['doctor']
@@ -26,6 +22,13 @@ class Doctor_CategorySerializer(serializers.ModelSerializer):
         if not doctor.is_doctor:
             raise serializers.ValidationError({"Error_Message": "User must be a doctor."})
         return attrs
+
+    def create(self, validated_data):
+        doctor_category = Doctor_Category.objects.create(**validated_data)
+        # doctor_category.save()
+        return doctor_category
+
+
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
@@ -50,15 +53,10 @@ class AppointmentSerializer(serializers.ModelSerializer):
 
         return attrs
 
-
     def create(self, validated_data):
         appointment = Appointment.objects.create(**validated_data)
         # appointment.save()
         return appointment
-
-
-
-
 
 class DatesSerializer(serializers.ModelSerializer):
     doctor_username = serializers.SerializerMethodField()

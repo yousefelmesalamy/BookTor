@@ -1,9 +1,9 @@
-from .serializers import UserSerializer
+from .serializers import UserSerializer, DoctorProfile
 from .models import USER
 from .permissons import UserPermission
 
 from rest_framework import viewsets, filters, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.contrib.auth.models import User
 
@@ -11,6 +11,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
+from rest_framework.decorators import action
+
 
 
 
@@ -111,3 +113,14 @@ class UserViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         kwargs['partial'] = True
         return super().update(request, *args, **kwargs)
+
+    @action(detail=True, methods=['get'], permission_classes=[AllowAny])
+    def doctorProfile(self, request, pk=None):
+        user = self.get_object()
+        serializer = DoctorProfile(user)
+        # try:
+        return Response(serializer.data)
+        # except Exception as e:
+        #     print(e)
+        #     return Response({"Response": "user not found"}, status=status.HTTP_404_NOT_FOUND)
+

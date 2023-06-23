@@ -29,8 +29,8 @@ class Doctor_Category(models.Model):
     doctor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     category = models.CharField(max_length=50, choices=Category_CHOICES, null=False, blank=False)
 
-    def __str__(self):
-        return f"{self.doctor} - {self.category}"
+    # def __str__(self):
+    #     return f"{self.doctor} - {self.category}"
 
     class Meta:
         verbose_name = 'Doctor Category'
