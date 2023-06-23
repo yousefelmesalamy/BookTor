@@ -117,10 +117,8 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'], permission_classes=[AllowAny])
     def doctorProfile(self, request, pk=None):
         user = self.get_object()
-        serializer = DoctorProfile(user)
-        # try:
-        return Response(serializer.data)
-        # except Exception as e:
-        #     print(e)
-        #     return Response({"Response": "user not found"}, status=status.HTTP_404_NOT_FOUND)
-
+        if user.is_doctor:
+            serializer = DoctorProfile(user)
+            return Response(serializer.data)
+        else:
+            return Response({"detail": "user is not doctor"}, status=status.HTTP_401_UNAUTHORIZED)

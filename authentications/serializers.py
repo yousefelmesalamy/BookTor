@@ -30,7 +30,12 @@ class DoctorProfile(serializers.Serializer):
 
     def get_doctor(self, obj):
         try:
-            data = UserSerializer(obj).data
+            user = UserSerializer(obj).data
+            if user.get("is_doctor"):
+                data = user
+            else:
+                # data = {"detail": "User is not a doctor"}
+                raise Exception("User is not a doctor")
         except Exception as e:
             print(e)
             data = {"detail": "Doctor not found"}
