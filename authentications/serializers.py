@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from .models import *
 from django.conf import settings
-from reservation.serializers import *
-from reservation.models import *
+from reservation.serializers import Doctor_CategorySerializer, DatesSerializer
+from reservation.models import Doctor_Category, Dates
 
 
 # from django.contrib.auth.password_validation import validate_password

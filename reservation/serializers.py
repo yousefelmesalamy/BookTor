@@ -39,7 +39,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_patient_data(self, obj):
-        data = UserSerializer(obj.patient).data
+        data = UserSerializer(obj).data
         return data
 
     def validate(self, attrs):
