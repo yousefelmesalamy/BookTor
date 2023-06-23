@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import *
+from authentications.serializers import UserSerializer
 
 
 class Doctor_CategorySerializer(serializers.ModelSerializer):
@@ -32,9 +33,14 @@ class Doctor_CategorySerializer(serializers.ModelSerializer):
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
+    patient_data = serializers.SerializerMethodField()
     class Meta:
         model = Appointment
         fields = '__all__'
+
+    def get_patient_data(self, obj):
+        data = UserSerializer(obj.patient).data
+        return data
 
     def validate(self, attrs):
         doctor = attrs['doctor']
