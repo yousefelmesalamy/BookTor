@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import *
-from authentications.serializers import UserSerializer
+from authentications.serializers import *
 
 
 class Doctor_CategorySerializer(serializers.ModelSerializer):
