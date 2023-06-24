@@ -10,7 +10,7 @@ from reservation.models import Doctor_Category, Dates
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = USER
-        fields = ('id', 'username', 'email', 'password', 'profile_picture', 'is_doctor')
+        fields = ('id', 'username', 'email', 'password', 'profile_pic', 'is_doctor')
         read_only_fields = ('id', 'date_joined',)
         extra_kwargs = {
             'password': {'write_only': True},
