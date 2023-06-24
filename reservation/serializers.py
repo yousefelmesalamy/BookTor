@@ -73,7 +73,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"Error_Message": "Appointment already exists."})
         if not doctor.is_doctor:
             raise serializers.ValidationError({"Error_Message": "User must be a doctor."})
-        if not patient.is_patient:
+        if patient.is_doctor:
             raise serializers.ValidationError({"Error_Message": "User must be a patient."})
 
         if attrs['date'] < datetime.date.today():
