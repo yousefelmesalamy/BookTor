@@ -47,52 +47,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
     lockup_field = 'id'
 
-    # def create(self, request, *args, **kwargs):
-    #     # data_1 = {key: value for key, value in request.data.items() if key in USERSSS.Meta.fields}
-    #     data_1 = {
-    #         'username': request.data["username"],
-    #         'first_name': request.data["first_name"],
-    #         'last_name': request.data["last_name"],
-    #         'email': request.data["email"],
-    #         'password1': request.data["password1"],
-    #         'password2': request.data["password2"],
-    #     }
-    #     try:
-    #         is_doctor = request.data["is_doctor"]
-    #     except Exception as e:
-    #         is_doctor = False
-    #         print(e)
-    #     data_2 = {
-    #         'name': request.data["name"],
-    #         'profile_picture': request.data["profile_picture"],
-    #         'bio': request.data["bio"],
-    #         'phone_number': request.data["phone_number"],
-    #         'gander': request.data["gander"],
-    #         'age': request.data["age"],
-    #         'is_doctor': is_doctor
-    #     }
-    #     serializer = UserSerializer(data=data_2, context={'request': request})
-    #     if User.objects.filter(username=data_1['username']).exists():
-    #         return Response({"Response": "username already exist !"}, status=status.HTTP_401_UNAUTHORIZED)
-    #     elif User.objects.filter(email=data_1['email']).exists():
-    #         return Response({"Response": "email already exist !"}, status=status.HTTP_401_UNAUTHORIZED)
-    #     elif data_1['password1'] != data_1['password2']:
-    #         return Response({"Response": "Passwords not matched !"}, status=status.HTTP_401_UNAUTHORIZED)
-    #     else:
-    #         if serializer.is_valid():
-    #             user = User.objects.create_user(username=data_1["username"],
-    #                                             password=data_1["password1"], email=data_1["email"],
-    #                                             first_name=data_1["first_name"],
-    #                                             last_name=data_1["last_name"])
-    #
-    #             serializer.save(user=user)
-    #             user.save()
-    #             # instance = (instance_1, instance_2)
-    #
-    #             token = Token.objects.get(user=user).key
-    #             return Response({"token": token, "user_id": user.id}, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
