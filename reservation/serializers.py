@@ -34,6 +34,7 @@ class Doctor_CategorySerializer(serializers.ModelSerializer):
 class AppointmentSerializer(serializers.ModelSerializer):
     patient_data = serializers.SerializerMethodField()
     doctor_data = serializers.SerializerMethodField()
+    patient = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Appointment
         fields = '__all__'
@@ -81,8 +82,8 @@ class AppointmentSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        user = self.context.get('request').user
-        validated_data['patient'] = user
+        # user = self.context.get('request').user
+        # validated_data['patient'] = user
         appointment = Appointment.objects.create(**validated_data)
         # appointment.save()
         return appointment
