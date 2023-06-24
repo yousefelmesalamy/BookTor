@@ -49,7 +49,7 @@ class DateViewSet(viewsets.ModelViewSet):
     queryset = Dates.objects.all()
     serializer_class = DatesSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterser_fields = ['doctor__username', 'date']
+    filterset_fields = ['doctor__username', 'date']
     search_fields = ['doctor__username', 'date']
     ordering_fields = ['doctor__username', 'date']
 
