@@ -6,6 +6,7 @@ from .permissons import *
 from .models import *
 from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import *
+from rest_framework.permissions import IsAuthenticated
 
 
 # Create your views here.
@@ -26,7 +27,7 @@ class Doctor_CategoryViewSet(viewsets.ModelViewSet):
 class AppointmentViewSet(viewsets.ModelViewSet):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
-    permission_classes = [IsAdminOrUser]
+    permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['doctor__username', 'patient__username', 'date', 'time']
     ordering_fields = ['doctor__username', 'patient__username', 'date', 'time']
