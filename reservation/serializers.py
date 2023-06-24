@@ -93,7 +93,7 @@ class DatesSerializer(serializers.ModelSerializer):
         fields = ['id', 'doctor', 'doctor_username', 'date', 'time_from', 'time_to', 'created_at', 'availability']
 
     def get_doctor_username(self, obj):
-        return obj.doctor.username + ' ' + obj.doctor.last_name
+        return obj.doctor.username
 
     def validate(self, attrs):
         doctor = attrs['doctor']
