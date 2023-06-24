@@ -26,7 +26,7 @@ class Doctor_CategoryViewSet(viewsets.ModelViewSet):
 class AppointmentViewSet(viewsets.ModelViewSet):
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
-    permission_classes = [IsDoctorOrReadOnly]
+    permission_classes = [IsAdminOrUser]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['doctor__username', 'patient__username', 'date', 'time']
     ordering_fields = ['doctor__username', 'patient__username', 'date', 'time']
