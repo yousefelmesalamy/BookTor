@@ -62,7 +62,7 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         if not request.user.is_authenticated:
             return False
         elif view.action in ['update', 'partial_update', 'retrieve', 'destroy']:
-            return request.user.is_staff
+            return request.user.is_staff or request.obj.doctor
         else:
             return False
 
@@ -78,5 +78,28 @@ class RetrieveOnly(permissions.BasePermission):
 
         if view.action == 'retrieve':
             return True
+        else:
+            return False
+
+class IsAdminOrUser(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if view.action == 'list':
+            return True
+        elif view.action == 'create':
+            return request.user.is_staff
+        elif view.action in ['retrieve', 'update', 'partial_update', 'destroy']:
+            return True
+        else:
+            return False
+
+    def has_object_permission(self, request, view, obj):
+        # Deny actions on objects if the user is not authenticated
+        if not request.user.is_authenticated:
+            return False
+        elif view.action in ['update', 'destroy', 'partial_update']:
+            return request.user.is_staff
+
+        elif view.action in ['retrieve']:
+            return request.user.is_authenticated
         else:
             return False
