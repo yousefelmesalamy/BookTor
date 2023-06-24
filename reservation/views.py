@@ -45,7 +45,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
 
 
 class DateViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsDoctorOrReadOnly]
+    permission_classes = [IsAdminOrUser]
     queryset = Dates.objects.all()
     serializer_class = DatesSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
