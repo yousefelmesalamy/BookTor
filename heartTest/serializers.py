@@ -16,7 +16,7 @@ class heartTestSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
-        response['patient_name'] = f"{instance.user.first_name} {instance.user.last_name}"
+        response['patient_username'] = instance.user.username
         return response
 
     def create(self, validated_data):
