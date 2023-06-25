@@ -9,6 +9,10 @@ from django.core.mail import send_mail
 from dateutil.relativedelta import relativedelta
 from datetime import date
 
+from bloodtest.models import bloodTest
+from heartTest.models import heartTest
+from alzhimarTest.models import alzhimarTest
+
 # Create your models here.
 USER_GOAL_CHOICES = (
     ('DOC', 'DOCTOR'),
@@ -55,6 +59,20 @@ class USER(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+    def heartTest(self):
+        query = heartTest.objects.filter(user=self)
+        if len(query) > 0:
+            return query.last()
+        return None
+
+    def bloodTest(self):
+        return bloodTest.objects.filter(user=self).last()
+
+    def alzhimarTest(self):
+        return alzhimarTest.objects.filter(user=self).last()
+
+
 
     class Meta:
         verbose_name = 'User'

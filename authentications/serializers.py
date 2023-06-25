@@ -4,6 +4,11 @@ from django.conf import settings
 from reservation.serializers import Doctor_CategorySerializer, DatesSerializer
 from reservation.models import Doctor_Category, Dates
 
+from bloodtest.serializers import bloodTestSerializer
+from heartTest.serializers import heartTestSerializer
+from alzhimarTest.serializers import alzhimarTestSerializer
+
+
 
 # from django.contrib.auth.password_validation import validate_password
 
@@ -50,3 +55,30 @@ class DoctorProfile(serializers.Serializer):
         doc = Dates.objects.filter(doctor=obj)
         data = DatesSerializer(doc, many=True).data
         return data
+
+
+class MlModelsResultsSerializer(serializers.Serializer):
+    def to_representation(self, instance):
+        print(instance)
+        data = super().to_representation(instance)
+
+        if instance.bloodTest() is not None:
+            data['bloodTest'] = bloodTestSerializer(instance.bloodTest()).data
+
+        else:
+            data['bloodTest'] = None
+
+        if instance.heartTest() is not None:
+            data['heartTest'] = heartTestSerializer(instance.heartTest()).data
+
+        else:
+            data['heartTest'] = None
+
+        if instance.alzhimarTest() is not None:
+            data['alzhimarTest'] = alzhimarTestSerializer(instance.alzhimarTest()).data
+
+        else:
+            data['alzhimarTest'] = None
+
+        return data
+

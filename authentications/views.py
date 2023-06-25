@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, DoctorProfile
+from .serializers import UserSerializer, DoctorProfile, MlModelsResultsSerializer
 from .models import USER
 from .permissons import UserPermission
 
@@ -76,3 +76,14 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         else:
             return Response({"detail": "user is not doctor"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    @action(detail=True, methods=['get'], permission_classes=[IsAuthenticated])
+    def MlModelsResults(self, request, pk=None):
+        user = self.get_object()
+        serializer = MlModelsResultsSerializer(user)
+        return Response(serializer.data)
+
+
+
+
+
